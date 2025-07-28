@@ -1,0 +1,12 @@
+{
+  "title": "<CLASS_TITLE_FROM_INPUT>",
+  "startDateTime": "<START_DATETIME_IN_ISO8601_FORMAT>",
+  "endDateTime": "<END_DATETIME_IN_ISO8601_FORMAT>",
+  "studentEmail": "<STUDENT_EMAIL_FROM_INPUT>",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "googleapis": "^154.0.0"
+  }
+}
