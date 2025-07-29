@@ -1,35 +1,22 @@
-// ==========================
-// 📌 IMPORTS
-// ==========================
 const express = require('express');
 const { google } = require('googleapis');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-// ==========================
-// 📌 EXPRESS APP
-// ==========================
 const app = express();
 
-// ✅ CORS: Allow Flutter Web (adjust if deploying)
 app.use(cors({
-  origin: '*', // or 'http://localhost:57298' if you want to be strict
+  origin: '*',
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type']
 }));
 
 app.use(bodyParser.json());
 
-// ==========================
-// 📌 OAUTH CONFIG
-// ==========================
 const CLIENT_ID = '125243843044-76bcr0jo3n7n7d99e9777pbfff856feq.apps.googleusercontent.com';
 const CLIENT_SECRET = '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';
-const REDIRECT_URI = 'http://localhost:3000/oauth2callback';
+const REDIRECT_URI = 'https://portalproject-etrs.onrender.com/oauth2callback'; // 🔥 updated
 
-// ==========================
-// 📌 CREATE OAUTH2 CLIENT
-// ==========================
 const oauth2Client = new google.auth.OAuth2(
   CLIENT_ID,
   CLIENT_SECRET,
@@ -38,9 +25,6 @@ const oauth2Client = new google.auth.OAuth2(
 
 let savedTokens = null;
 
-// ==========================
-// 📌 STEP 1: START OAUTH FLOW
-// ==========================
 app.get('/auth', (req, res) => {
   const scopes = [
     'https://www.googleapis.com/auth/calendar',
@@ -58,9 +42,6 @@ app.get('/auth', (req, res) => {
   res.redirect(url);
 });
 
-// ==========================
-// 📌 STEP 2: HANDLE REDIRECT
-// ==========================
 app.get('/oauth2callback', async (req, res) => {
   try {
     const code = req.query.code;
@@ -78,9 +59,6 @@ app.get('/oauth2callback', async (req, res) => {
   }
 });
 
-// ==========================
-// 📌 STEP 3: SCHEDULE CLASS
-// ==========================
 app.post('/schedule-class', async (req, res) => {
   try {
     if (!savedTokens) {
@@ -120,9 +98,6 @@ app.post('/schedule-class', async (req, res) => {
   }
 });
 
-// ==========================
-// 📌 START SERVER
-// ==========================
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`✅ Server running on http://localhost:${PORT}`);
